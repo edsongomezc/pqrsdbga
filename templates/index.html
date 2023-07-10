@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- JS de Bootstrap y dependencias (jQuery y Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <title>PQRSD Alcaldia de Bucaramanga</title>
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <div class="container header">
+        <img src="{{ url_for('static', filename='Asset 14.png') }}">
+    </div>
+    <div class="container home">
+        <h1>PROTOTIPO DE HERRAMIENTA PARA LA MEJORA EN LOS PROCESOS DE DESIGNACIÓN DE PQRSD DE LA ALCALDIA DE
+            BUCARAMANGA</h1>
+        <h2>Ingrese el contenido de la PQRSD</h2>
+        <form id="prediction-form">
+            <textarea class="textarea" name="text" required></textarea>
+            <button class="btn btn-primary" type="button" id="button-send">Analizar</button>
+        </form>
+        <p class="info">
+            <span>Pasos a seguir</span> <br>
+            <span>1. </span>Inserte el contenido de la PQRSD recibida en el campo de texto.<br>
+            <span>2. </span>De click en el botón "Analizar".<br>
+            <span>3. </span>Se desplegará un modal con la recomendación de asignación de la PQRSD.
+        </p>
+        <p class="info">
+            <span>Importante:</span> Esta herramienta permite apoyar el proceso de designación de PQRSD de la Alcaldía
+            de Bucaramanga, en el marco del proyecto
+            de grado "PROTOTIPO DE HERRAMIENTA PARA LA MEJORA EN LOS PROCESOS DE DESIGNACIÓN DE PQRSD DE LA ALCALDIA DE
+            BUCARAMANGA" Desarrollado por los
+            Estudiantes Edson Gómez y Wilfredo Gómez para la obtención del título Magister en Ciencia de Datos de la
+            Universidad Javeriana de Cali.
+        </p>
+
+    </div>
+
+    <div class="modal fade" id="predictionModal" tabindex="-1" role="dialog" aria-labelledby="predictionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="predictionModalLabel">Recomendación de designación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h2 id="predictionResult"></h2>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div> 
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="emptyFieldModal" tabindex="-1" role="dialog" aria-labelledby="predictionModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="predictionModalLabel">¡Importante!</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2>Para continuar,debe ingresar el texto para realizar la clasificación.</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        document.getElementById('button-send').addEventListener('click', function () {
+            var text = document.querySelector('textarea[name="text"]').value;
+
+            if (text.trim() === '') {
+                // El campo está vacío, mostrar modal de advertencia
+                $('#emptyFieldModal').modal('show');
+            } else {
+                var formData = new FormData();
+                formData.append('text', text);
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            document.getElementById('predictionResult').textContent = xhr.responseText;
+                            $('#predictionModal').modal('show');
+                        } else {
+                            console.error(xhr.responseText);
+                        }
+                    }
+                };
+                xhr.send(formData);
+            }
+        });
+
+        $('#predictionModal').on('hidden.bs.modal', function () {
+            document.querySelector('textarea[name="text"]').value = ''; // Limpiar el textarea
+        });
+    </script>
+</body>
+{% include 'footer.html' %}
+
+</html>
