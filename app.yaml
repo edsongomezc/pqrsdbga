@@ -2,4 +2,4 @@ runtime: python39
 entrypoint: gunicorn -b :$PORT app:app
 
 env_variables:
-  GOOGLE_APPLICATION_CREDENTIALS: "static/pqrsdbga-9232ad56b2e7.json"
+  GOOGLE_APPLICATION_CREDENTIALS: "pqrsdbga-9a9ce7baa615.json"
