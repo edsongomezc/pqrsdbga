@@ -3,6 +3,7 @@ from joblib import load
 from sklearn.feature_extraction.text import TfidfVectorizer
 from urllib.request import urlretrieve
 import os
+import tempfile
 
 app = Flask(__name__)
 
@@ -18,34 +19,15 @@ model_urls = [
     "https://storage.googleapis.com/pqrsdbga.appspot.com/tfidf_cuarto_componente_final.joblib",
 ]
 
-# Nombres de archivo locales para los modelos y archivos tfidf
-model_filenames = [
-    "primer_componente_final.joblib",
-    "segundo_componente_final.joblib",
-    "tercer_componente_final.joblib",
-    "cuarto_componente_final.joblib",
-    "tfidf_primer_componente_final.joblib",
-    "tfidf_segundo_componente_final.joblib",
-    "tfidf_tercer_componente_final.joblib",
-    "tfidf_cuarto_componente_final.joblib",
-]
+# Descargar los modelos y archivos tfidf si no existen y cargarlos
+models = []
+for url in model_urls:
+    temp_file = tempfile.NamedTemporaryFile(delete=False)
+    urlretrieve(url, temp_file.name)
+    models.append(load(temp_file.name))
 
-# Descargar los modelos y archivos tfidf si no existen
-for url, filename in zip(model_urls, model_filenames):
-    if not os.path.exists(filename):
-        urlretrieve(url, filename)
-
-# Cargar los modelos
-componente1 = load(model_filenames[0])
-componente2 = load(model_filenames[1])
-componente3 = load(model_filenames[2])
-componente4 = load(model_filenames[3])
-
-# Cargar los archivos tfidf
-tfidf1 = load(model_filenames[4])
-tfidf2 = load(model_filenames[5])
-tfidf3 = load(model_filenames[6])
-tfidf4 = load(model_filenames[7])
+# Asignar modelos y archivos tfidf a variables
+componente1, componente2, componente3, componente4, tfidf1, tfidf2, tfidf3, tfidf4 = models
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
