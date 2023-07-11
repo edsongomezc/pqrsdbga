@@ -9,14 +9,14 @@ app = Flask(__name__)
 
 # URLs de los modelos y archivos tfidf en Google Cloud Storage
 model_urls = [
-    "https://storage.googleapis.com/pqrsdbga.appspot.com/primer_componente_final.joblib",
-    "https://storage.googleapis.com/pqrsdbga.appspot.com/segundo_componente_final.joblib",
-    "https://storage.googleapis.com/pqrsdbga.appspot.com/tercer_componente_final.joblib",
-    "https://storage.googleapis.com/pqrsdbga.appspot.com/cuarto_componente_final.joblib",
-    "https://storage.googleapis.com/pqrsdbga.appspot.com/tfidf_primer_componente_final.joblib",
-    "https://storage.googleapis.com/pqrsdbga.appspot.com/tfidf_segundo_componente_final.joblib",
-    "https://storage.googleapis.com/pqrsdbga.appspot.com/tfidf_tercer_componente_final.joblib",
-    "https://storage.googleapis.com/pqrsdbga.appspot.com/tfidf_cuarto_componente_final.joblib",
+    "https://storage.googleapis.com/bgapqrsd.appspot.com/primer_componente_final.joblib",
+    "https://storage.googleapis.com/bgapqrsd.appspot.com/segundo_componente_final.joblib",
+    "https://storage.googleapis.com/bgapqrsd.appspot.com/tercer_componente_final.joblib",
+    "https://storage.googleapis.com/bgapqrsd.appspot.com/cuarto_componente_final.joblib",
+    "https://storage.googleapis.com/bgapqrsd.appspot.com/tfidf_primer_componente_final.joblib",
+    "https://storage.googleapis.com/bgapqrsd.appspot.com/tfidf_segundo_componente_final.joblib",
+    "https://storage.googleapis.com/bgapqrsd.appspot.com/tfidf_tercer_componente_final.joblib",
+    "https://storage.googleapis.com/bgapqrsd.appspot.com/tfidf_cuarto_componente_final.joblib",
 ]
 
 # Descargar los modelos y archivos tfidf si no existen y cargarlos
