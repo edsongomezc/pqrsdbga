@@ -1,6 +1,5 @@
 runtime: python39
 entrypoint: gunicorn -b :$PORT app:app
-service_account: bgapqrsd@appspot.gserviceaccount.com
 
 env_variables:
-  GOOGLE_APPLICATION_CREDENTIALS: "bgapqrsd-aef28e3ad6a7.json"
+  GOOGLE_APPLICATION_CREDENTIALS: "pqrsdbga23-228a53a72766.json"

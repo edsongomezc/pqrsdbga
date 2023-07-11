@@ -3,31 +3,49 @@ from joblib import load
 from sklearn.feature_extraction.text import TfidfVectorizer
 from urllib.request import urlretrieve
 import os
-import tempfile
 
 app = Flask(__name__)
 
 # URLs de los modelos y archivos tfidf en Google Cloud Storage
 model_urls = [
-    "https://storage.googleapis.com/bgapqrsd.appspot.com/primer_componente_final.joblib",
-    "https://storage.googleapis.com/bgapqrsd.appspot.com/segundo_componente_final.joblib",
-    "https://storage.googleapis.com/bgapqrsd.appspot.com/tercer_componente_final.joblib",
-    "https://storage.googleapis.com/bgapqrsd.appspot.com/cuarto_componente_final.joblib",
-    "https://storage.googleapis.com/bgapqrsd.appspot.com/tfidf_primer_componente_final.joblib",
-    "https://storage.googleapis.com/bgapqrsd.appspot.com/tfidf_segundo_componente_final.joblib",
-    "https://storage.googleapis.com/bgapqrsd.appspot.com/tfidf_tercer_componente_final.joblib",
-    "https://storage.googleapis.com/bgapqrsd.appspot.com/tfidf_cuarto_componente_final.joblib",
+    "https://storage.googleapis.com/pqrsdbga23.appspot.com/primer_componente_final.joblib",
+    "https://storage.googleapis.com/pqrsdbga23.appspot.com/segundo_componente_final.joblib",
+    "https://storage.googleapis.com/pqrsdbga23.appspot.com/tercer_componente_final.joblib",
+    "https://storage.googleapis.com/pqrsdbga23.appspot.com/cuarto_componente_final.joblib",
+    "https://storage.googleapis.com/pqrsdbga23.appspot.com/tfidf_primer_componente_final.joblib",
+    "https://storage.googleapis.com/pqrsdbga23.appspot.com/tfidf_segundo_componente_final.joblib",
+    "https://storage.googleapis.com/pqrsdbga23.appspot.com/tfidf_tercer_componente_final.joblib",
+    "https://storage.googleapis.com/pqrsdbga23.appspot.com/tfidf_cuarto_componente_final.joblib",
 ]
 
-# Descargar los modelos y archivos tfidf si no existen y cargarlos
-models = []
-for url in model_urls:
-    temp_file = tempfile.NamedTemporaryFile(delete=False)
-    urlretrieve(url, temp_file.name)
-    models.append(load(temp_file.name))
+# Nombres de archivo locales para los modelos y archivos tfidf  
+model_filenames = [
+    "primer_componente_final.joblib",
+    "segundo_componente_final.joblib",
+    "tercer_componente_final.joblib",
+    "cuarto_componente_final.joblib",
+    "tfidf_primer_componente_final.joblib",
+    "tfidf_segundo_componente_final.joblib",
+    "tfidf_tercer_componente_final.joblib",
+    "tfidf_cuarto_componente_final.joblib",
+]
 
-# Asignar modelos y archivos tfidf a variables
-componente1, componente2, componente3, componente4, tfidf1, tfidf2, tfidf3, tfidf4 = models
+# Descargar los modelos y archivos tfidf si no existen
+for url, filename in zip(model_urls, model_filenames):
+    if not os.path.exists(filename):
+        urlretrieve(url, filename)
+
+# Cargar los modelos
+componente1 = load(model_filenames[0])
+componente2 = load(model_filenames[1])
+componente3 = load(model_filenames[2])
+componente4 = load(model_filenames[3])
+
+# Cargar los archivos tfidf
+tfidf1 = load(model_filenames[4])
+tfidf2 = load(model_filenames[5])
+tfidf3 = load(model_filenames[6])
+tfidf4 = load(model_filenames[7])
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
