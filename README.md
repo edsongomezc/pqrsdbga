@@ -9,17 +9,29 @@ Además, se implementó un diseño visual atractivo y responsive para pantallas 
 ## Librerías
 
 blinker==1.6.2
+
 click==8.1.4
+
 Flask==2.3.2
+
 gunicorn==20.1.0
+
 importlib-metadata==6.8.0
+
 itsdangerous==2.1.2
+
 Jinja2==3.1.2
+
 joblib==1.3.1
+
 MarkupSafe==2.1.3
+
 scikit-learn==1.3.0
+
 Werkzeug==2.3.6
+
 zipp==3.16.0
+
 
 Ver, requirements.txt
 
